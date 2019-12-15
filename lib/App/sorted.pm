@@ -47,11 +47,13 @@ Another example, assuming `file.txt`'s content is:
 then this will return success:
 
     % sorted -S by_length file.txt
+    % sorted -q -S by_length file.txt  ;# -q silences output, it just returns appropriate exit code
 
-while this will not:
+while these will not:
 
     % sorted file.txt
     % sorted -S 'asciibetically<i>' file.txt
+    % sorted -S 'by_length<r>' file.txt
 
 _
     args => {
@@ -60,12 +62,24 @@ _
             default => '-',
             pos => 0,
         },
-        %Sort::Sub::argopts_sortsub,
+        %Sort::Sub::argsopt_sortsub,
         quiet => {
             schema => 'bool*',
             cmdline_aliases => {q=>{}},
         },
     },
+    links => [
+        {
+            url => 'prog:is-sorted',
+            description => <<'_',
+
+The <prog:sorted> script is inspired by, and an alternative for,
+<prog:is-sorted> from <pm:File::IsSorted> by SHLOMIF. `sorted` adds the ability
+to use <pm:Sort::Sub> routines.
+
+_
+        }
+    ],
 };
 sub sorted {
     my %args = @_;
@@ -122,9 +136,5 @@ See L<sorted>.
 
 
 =head1 append:SEE ALSO
-
-The B<sorted> script is inspired by, and an alternative for, L<is-sorted> from
-L<File::IsSorted> by SHLOMIF. B<sorted> added the ability to use L<Sort::Sub>
-routines.
 
 L<Sort::Sub>
