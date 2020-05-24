@@ -93,8 +93,8 @@ sub sorted {
     }
 
     my $sort_sub  = $args{sort_sub}  // 'asciibetically';
-    my $sort_args = $args{sort_args} // {};
-    my $cmp = Sort::Sub::get_sorter($sort_sub, $sort_args);
+    my $sort_args = $args{sort_args} // [];
+    my $cmp = Sort::Sub::get_sorter($sort_sub, { map { split /=/, $_, 2 } @$sort_args });
 
     my $sorted = 1;
     my ($prev_line, $cur_line);
